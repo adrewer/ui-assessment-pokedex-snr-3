@@ -1,43 +1,43 @@
-import { useMemo } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { useMemo } from "react";
+import { useQuery, gql } from "@apollo/client";
 
-export type Pokemon = {
+// shape we use across the app for list items
+export type PokemonListItem = {
   id: string;
   name: string;
+  number: string;
+  image: string;
+  types: string[];
 };
 
-export type PokemonOption = {
-  value: Pokemon['id'];
-  label: Pokemon['name'];
-};
-
+// graphql query for the list page
 export const GET_POKEMONS = gql`
   query pokemons($first: Int!) {
     pokemons(first: $first) {
       id
       name
+      number
+      image
+      types
     }
   }
 `;
 
-export const useGetPokemons = () => {
-  const { data, ...queryRes } = useQuery(GET_POKEMONS, {
-    variables: {
-      first: 151, // Keep hard coded
-    },
+/**
+ * Fetch the first N Pokémon (client-side search/filter/sort happens in the list).
+ * default is 151 to cover Gen 1.
+ */
+export const useGetPokemons = (first: number = 151) => {
+  const { data, loading, error } = useQuery(GET_POKEMONS, {
+    variables: { first },
   });
 
-  const pokemons: Pokemon[] = useMemo(() => data?.pokemons || [], [data]);
-
-  const pokemonOptions: PokemonOption[] = useMemo(
-    () => pokemons.map((p: Pokemon) => ({ value: p.id, label: p.name })),
-    [pokemons]
+  // flatten the apollo data shape into a plain array for the UI
+  const pokemons: PokemonListItem[] = useMemo(
+    () => (data?.pokemons ?? []) as PokemonListItem[],
+    [data]
   );
 
-  return {
-    pokemons,
-    pokemonOptions,
-    ...queryRes,
-  };
+  // return a conventional shape: data/loading/error
+  return { data: pokemons, loading, error };
 };

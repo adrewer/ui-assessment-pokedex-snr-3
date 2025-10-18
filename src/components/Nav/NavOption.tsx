@@ -1,74 +1,40 @@
-import clsx from 'clsx';
-import React from 'react';
-import { createUseStyles } from 'react-jss';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { createUseStyles } from "react-jss";
+import clsx from "clsx";
 
-interface NavOptionProps {
-  to: string;
-  icon: string;
-  name: string;
-}
+type Props = { to: string; icon: string; children: React.ReactNode };
 
-export const NavOption: React.FC<NavOptionProps> = ({
-  to,
-  icon,
-  name,
-  children,
-}) => {
-  const classes = useStyles();
-
-  const getRootClassName = ({ isActive }: { isActive: boolean }) => {
-    return clsx(classes.root, {
-      [classes.active]: isActive,
-    });
-  };
-
+export const NavOption: React.FC<Props> = ({ to, icon, children }) => {
+  const { pathname, search } = useLocation();
+  const s = useStyles({ active: pathname === to });
   return (
-    <NavLink to={to} className={getRootClassName} title={name}>
-      <span className={clsx(classes.icon, 'material-icons')}>{icon}</span>
-      <span className={classes.text}>{children}</span>
-    </NavLink>
+    <Link to={`${to}${search}`} className={s.root} aria-current={pathname === to ? "page" : undefined}>
+      <span className={clsx("material-icons", s.icon)} aria-hidden>
+        {icon}
+      </span>
+      <span className={s.label}>{children}</span>
+    </Link>
   );
 };
 
 const useStyles = createUseStyles(
   {
     root: {
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      boxSizing: 'border-box',
-      height: '56px',
-      textDecoration: 'none',
-      overflow: 'hidden',
-      background: '#131924',
-      '&:hover': {
-        filter: 'brightness(120%)',
-      },
-      '&:active': {
-        filter: 'brightness(130%)',
-      },
+      display: "flex",
+      alignItems: "center",
+      height: 44,
+      gap: 12,
+      color: "#e6e7eb",
+      textDecoration: "none",
+      borderRadius: 10,
+      margin: "6px 8px",
+      padding: "0 12px",
+      background: (p: { active: boolean }) => (p.active ? "rgba(255,255,255,.08)" : "transparent"),
+      "&:hover": { background: "rgba(255,255,255,.06)" },
     },
-    text: {
-      marginLeft: '18px',
-    },
-    active: {
-      background: '#171E2b',
-      '&:hover': {
-        filter: 'brightness(110%)',
-      },
-      '&:active': {
-        filter: 'brightness(120%)',
-      },
-    },
-    icon: {
-      boxSizing: 'border-box',
-      width: '45px',
-      minWidth: '45px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+    icon: { opacity: 0.9 },
+    label: { whiteSpace: "nowrap" },
   },
-  { name: 'NavOption' }
+  { name: "NavOption" }
 );

@@ -1,42 +1,24 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from 'react';
+import React, { createContext, useContext, useState } from "react";
 
-type Layout = { navCollapsed: boolean };
-
-type LayoutContextValue = {
-  layout: Layout;
-  setLayout: Dispatch<SetStateAction<Layout>>;
+// simple layout context; only tracks left-nav collapsed state for now
+type LayoutCtx = {
+  navCollapsed: boolean;
+  toggleNav: () => void;
 };
 
-const LayoutContext = createContext<LayoutContextValue>({
-  layout: { navCollapsed: false },
-  setLayout: () => null,
-});
+const Ctx = createContext<LayoutCtx | undefined>(undefined);
 
-export const LayoutProvider: React.FC = ({ children }) => {
-  const [layout, setLayout] = useState({
-    navCollapsed: true,
-  });
-
-  return (
-    <LayoutContext.Provider value={{ layout, setLayout }}>
-      {children}
-    </LayoutContext.Provider>
-  );
+const LayoutProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [navCollapsed, setNavCollapsed] = useState(false);
+  const toggleNav = () => setNavCollapsed(v => !v);
+  return <Ctx.Provider value={{ navCollapsed, toggleNav }}>{children}</Ctx.Provider>;
 };
 
-export const useLayout = () => {
-  const { layout } = useContext(LayoutContext);
-  return layout;
-};
+export function useLayout() {
+  const v = useContext(Ctx);
+  if (!v) throw new Error("useLayout must be used within LayoutProvider");
+  return v;
+}
+export const useToggleNav = () => useLayout().toggleNav;
 
-export const useToggleNav = () => {
-  const { setLayout } = useContext(LayoutContext);
-  return () =>
-    setLayout((layout) => ({ ...layout, navCollapsed: !layout.navCollapsed }));
-};
+export default LayoutProvider;

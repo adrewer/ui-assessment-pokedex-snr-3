@@ -1,2 +1,2 @@
-export * from './Nav';
-export * from './NavOption';
+export { Nav } from "./Nav";
+export { NavOption } from "./NavOption";
