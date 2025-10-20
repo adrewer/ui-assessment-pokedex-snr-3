@@ -39,7 +39,6 @@ GraphQL endpoint defaults to `https://graphql-pokemon2.vercel.app/`. You can ove
 ## Notes
 
 - Modal routing uses background state for smooth transitions
-- Theme system supports light and dark modes
 - Nav bar is collapsible and responsive
 - All components are typed and commented for clarity
 
