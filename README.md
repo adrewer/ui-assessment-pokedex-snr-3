@@ -41,6 +41,10 @@ GraphQL endpoint defaults to `https://graphql-pokemon2.vercel.app/`. You can ove
 This project is deployed via Netlify:  
 [https://ava-pokedex-ui.netlify.app](https://ava-pokedex-ui.netlify.app)
 
+## Testing
+This project was manually tested through hands-on interaction. Search functionality, layout consistency, and 
+modal behavior were all validated through brute-force usage and visual QA.
+
 ## Notes
 
 - Modal routing uses background state for smooth transitions
