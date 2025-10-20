@@ -36,6 +36,11 @@ npm run dev
 
 GraphQL endpoint defaults to `https://graphql-pokemon2.vercel.app/`. You can override it with `VITE_GRAPHQL_ENDPOINT`.
 
+## Deployment
+
+This project is deployed via Netlify:  
+[https://ava-pokedex-ui.netlify.app](https://ava-pokedex-ui.netlify.app)
+
 ## Notes
 
 - Modal routing uses background state for smooth transitions
