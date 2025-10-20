@@ -1,4 +1,3 @@
-// src/app/App.tsx
 import React from "react";
 import { createUseStyles } from "react-jss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -6,11 +5,12 @@ import { ApolloProvider } from "@apollo/client";
 import { client } from "./client";
 import { LayoutProvider } from "../contexts";
 import { Nav } from "../components";
-import { ListPage } from "../screens";
+import { ListPage } from "../screens"; // default import
 
-// app shell: GraphQL client, layout context, router
+// App shell: wraps the entire app with GraphQL, layout context, and routing
 function App() {
   const s = useStyles();
+
   return (
     <ApolloProvider client={client}>
       <LayoutProvider>
@@ -20,10 +20,10 @@ function App() {
             <div className={s.content}>
               <div className={s.scroll}>
                 <Routes>
+                  {/* List view and modal routing */}
                   <Route path="/pokemon" element={<ListPage />} />
                   <Route path="/pokemon/:name" element={<ListPage />} />
-                  {/* default → list */}
-                  <Route path="*" element={<ListPage />} />
+                  <Route path="*" element={<ListPage />} /> {/* fallback route */}
                 </Routes>
               </div>
             </div>
@@ -34,7 +34,7 @@ function App() {
   );
 }
 
-// keep the app background simple; the diagonal texture will live in ListPage only
+// Layout styles — background stays simple here; texture lives in ListPage
 const useStyles = createUseStyles(
   {
     root: {
@@ -43,8 +43,17 @@ const useStyles = createUseStyles(
       width: "100vw",
       display: "flex",
     },
-    content: { flex: 1, overflow: "hidden", position: "relative" },
-    scroll: { position: "absolute", inset: 0, overflow: "auto", paddingBottom: 24 },
+    content: {
+      flex: 1,
+      overflow: "hidden",
+      position: "relative",
+    },
+    scroll: {
+      position: "absolute",
+      inset: 0,
+      overflow: "auto",
+      paddingBottom: 24,
+    },
   },
   { name: "App" }
 );

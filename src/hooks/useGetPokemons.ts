@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useQuery, gql } from "@apollo/client";
 
-// shape we use across the app for list items
+// Shared shape for Pokémon list items across the app
 export type PokemonListItem = {
   id: string;
   name: string;
@@ -10,7 +10,7 @@ export type PokemonListItem = {
   types: string[];
 };
 
-// graphql query for the list page
+// GraphQL query to fetch Pokémon list data
 export const GET_POKEMONS = gql`
   query pokemons($first: Int!) {
     pokemons(first: $first) {
@@ -24,20 +24,21 @@ export const GET_POKEMONS = gql`
 `;
 
 /**
- * Fetch the first N Pokémon (client-side search/filter/sort happens in the list).
- * default is 151 to cover Gen 1.
+ * Custom hook to fetch a list of Pokémon.
+ * Uses Apollo Client to query the GraphQL API.
+ * Defaults to 1000 results to cover all generations.
+ * Filtering and search are handled client-side.
  */
-export const useGetPokemons = (first: number = 151) => {
+export const useGetPokemons = (first: number = 1000) => {
   const { data, loading, error } = useQuery(GET_POKEMONS, {
     variables: { first },
   });
 
-  // flatten the apollo data shape into a plain array for the UI
+  // Memoize and cast the result to the expected shape
   const pokemons: PokemonListItem[] = useMemo(
     () => (data?.pokemons ?? []) as PokemonListItem[],
     [data]
   );
 
-  // return a conventional shape: data/loading/error
   return { data: pokemons, loading, error };
 };

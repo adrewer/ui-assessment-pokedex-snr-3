@@ -2,23 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+
+    <!-- Favicon for browser tab -->
     <link rel="icon" href="/favicon.ico" />
+
+    <!-- Responsive scaling for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Browser theme color -->
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+
+    <!-- SEO description for search engines and link previews -->
+    <meta name="description" content="A sleek, responsive Pokédex built with React and TypeScript." />
+
+    <!-- iOS home screen icon -->
     <link rel="apple-touch-icon" href="/logo192.png" />
-    <link rel="manifest" href="/manifest.json" />    
+
+    <!-- Progressive Web App manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Fonts used throughout the app -->
     <link
-      href='https://fonts.googleapis.com/css?family=Cabin:400,500,600|Roboto:400,500,600|Roboto+Mono:400,500,600&display=swap'
-      rel='stylesheet' crossorigin='anonymous' />
-    <title>Pokemon</title>
+      href="https://fonts.googleapis.com/css?family=Cabin:400,500,600|Roboto:400,500,600|Roboto+Mono:400,500,600&display=swap"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+
+    <!-- Default tab title before React takes over -->
+    <title>Pokédex</title>
   </head>
+
   <body>
+    <!-- Message shown if JavaScript is disabled -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- React mounts the app here -->
     <div id="root"></div>
-     <script type="module" src="/src/index.tsx"></script>
+
+    <!-- Entry point for React app -->
+    <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

@@ -1,16 +1,22 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
 
-type Props = { value: string; onChange: (v: string) => void; placeholder?: string };
+// Props for controlled input behavior
+type Props = {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+};
 
+// JSS styles for search input
 const useStyles = createUseStyles({
   root: {
     display: "flex",
     alignItems: "center",
     padding: "10px 14px",
-    borderRadius: 999,
-    border: "1px solid rgba(255,255,255,.15)",
-    background: "rgba(255,255,255,.06)",
+    borderRadius: 999,                           // Pill shape
+    border: "1px solid rgba(255,255,255,.15)", // Subtle border
+    background: "rgba(255,255,255,.06)",       // Translucent background
     marginBottom: 16,
   },
   input: {
@@ -23,8 +29,10 @@ const useStyles = createUseStyles({
   },
 });
 
+// Search box component for filtering Pokémon list
 export const SearchBox: React.FC<Props> = ({ value, onChange, placeholder }) => {
   const s = useStyles();
+
   return (
     <label className={s.root} aria-label="Search Pokémon">
       <input

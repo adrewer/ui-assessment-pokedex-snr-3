@@ -1,5 +1,5 @@
-// Apollo Client setup — this connects our app to the Pokémon GraphQL API
-// Think of this file as the "bridge" between our frontend and the data source.
+// Apollo Client setup — connects the app to the Pokémon GraphQL API
+// Acts as the bridge between frontend and data source
 
 import {
   ApolloClient,
@@ -8,32 +8,30 @@ import {
   ApolloLink,
 } from "@apollo/client";
 
-// the API endpoint — can use an .env variable or default to the public Pokémon GraphQL
+// API endpoint — uses .env variable if available, otherwise defaults to public Pokémon GraphQL
 const uri =
   (import.meta as any).env?.VITE_GRAPHQL_ENDPOINT ||
   "https://graphql-pokemon2.vercel.app/";
 
-// creating one shared Apollo Client instance that the whole app can use
+// Create a shared Apollo Client instance for the entire app
 export const client = new ApolloClient({
-  // link = how Apollo connects to the API
+  // Link defines how Apollo sends requests to the API
   link: ApolloLink.from([
-    new HttpLink({ uri }), // handles sending requests to the endpoint
+    new HttpLink({ uri }), // Sends GraphQL queries to the endpoint
   ]),
 
-  // cache = where Apollo temporarily stores responses
+  // Cache stores query results in memory for performance and pagination
   cache: new InMemoryCache({
-    // typePolicies help Apollo understand how to merge data
     typePolicies: {
       Query: {
         fields: {
           pokemons: {
-            // only use "first" argument (limit) as the cache key
+            // Use "first" argument as cache key
             keyArgs: ["first"],
 
-            // merge function lets us "load more" Pokémon and keep the existing ones
+            // Merge function enables "load more" behavior
             merge(existing = [], incoming: any[]) {
-              // combine old and new results into one array
-              return [...existing, ...incoming];
+              return [...existing, ...incoming]; // Append new results
             },
           },
         },
@@ -42,8 +40,10 @@ export const client = new ApolloClient({
   }),
 });
 
-// summary of what’s happening:
-// 1. define the API endpoint
-// 2. set up an Apollo link to send requests
-// 3. configure the cache so “Load More” can append data instead of replacing it
-// 4. export the client for the rest of the app to use (in <ApolloProvider />)
+/**
+ * Summary:
+ * 1. Define the GraphQL endpoint
+ * 2. Set up Apollo link to send requests
+ * 3. Configure cache to support pagination
+ * 4. Export the client for use in <ApolloProvider />
+ */

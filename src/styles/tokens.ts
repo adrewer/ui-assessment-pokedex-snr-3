@@ -1,40 +1,50 @@
-// Design tokens = single source of truth for styling.
-// I tweak colors/spacing here once, and the whole UI updates.
-// Keeps JSS styles consistent and easy to reason about.
+// Design tokens: centralized styling values for consistent theming across the app
 
 export const tokens = {
   color: {
-    bg: "#0b0c10",        // app background
-    card: "#111218",      // surface/card background
-    text: "#e6e7eb",      // primary text
-    subtext: "#a8acb8",   // secondary text
-    chip: "#1a1c24",      // type pill background
-    chipText: "#dfe3ee",  // type pill text
-    accent: "#6dd5fa",    // interactive/hover accent
-    accentMuted: "#3ca0d0",
-    border: "#232634",    // subtle borders
-    focus: "#9bd7ff",     // keyboard focus ring
-    danger: "#ff6b6b",    // errors + alerts
+    bg: "#0b0c10",         // App background
+    card: "#111218",       // Card/surface background
+    text: "#e6e7eb",       // Primary text color
+    subtext: "#a8acb8",    // Secondary text color
+    chip: "#1a1c24",       // Type pill background
+    chipText: "#dfe3ee",   // Type pill text
+    accent: "#6dd5fa",     // Hover/interactive accent
+    accentMuted: "#3ca0d0",// Subtle accent variant
+    border: "#232634",     // Divider and border color
+    focus: "#9bd7ff",      // Focus ring color
+    danger: "#ff6b6b",     // Error and alert color
   },
 
-  // Rounded corners (shared across cards/buttons)
-  radius: { sm: 10, md: 14, lg: 20 },
+  radius: {
+    sm: 10,  // Small rounded corners (e.g. pills)
+    md: 14,  // Medium radius (e.g. cards)
+    lg: 20,  // Large radius (e.g. modals)
+  },
 
-  // Spacing scale (padding/margins)
-  space: { xs: 6, sm: 10, md: 14, lg: 20 },
+  space: {
+    xs: 6,   // Extra small spacing
+    sm: 10,  // Small spacing
+    md: 14,  // Medium spacing
+    lg: 20,  // Large spacing
+  },
 
-  // Typography (stack + sizes + weights)
   font: {
-    // Inter if available; otherwise system fonts
-    family:
-      "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial",
-    size: { sm: 12, md: 14, lg: 18, xl: 22 },
-    weight: { regular: 400, medium: 500, semibold: 600 },
+    family: "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial",
+    size: {
+      sm: 12,  // Small text (labels, chips)
+      md: 14,  // Default body text
+      lg: 18,  // Section headers
+      xl: 22,  // Modal titles or large headings
+    },
+    weight: {
+      regular: 400,
+      medium: 500,
+      semibold: 600,
+    },
   },
 
-  // Depth/elevation (soft shadows for cards and hover)
   shadow: {
-    card: "0 8px 24px rgba(0,0,0,0.25)",
-    hover: "0 12px 32px rgba(0,0,0,0.35)",
+    card: "0 8px 24px rgba(0,0,0,0.25)",   // Default card elevation
+    hover: "0 12px 32px rgba(0,0,0,0.35)", // Hover elevation
   },
 };

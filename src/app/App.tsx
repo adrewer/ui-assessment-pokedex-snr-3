@@ -1,4 +1,3 @@
-// src/app/App.tsx
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createUseStyles } from "react-jss";
@@ -8,13 +7,14 @@ import { LayoutProvider } from "../contexts";
 import { Nav } from "../components";
 import { ListPage } from "../screens";
 
+// Root app component with routing, layout, and global providers
 function App() {
   const s = useStyles();
 
   return (
     <ApolloProvider client={client}>
       <LayoutProvider>
-        {/* Fixed background layer always behind everything */}
+        {/* Fixed background layer (visual texture behind all content) */}
         <div id="app-bg" className={s.background}></div>
 
         {/* Foreground content */}
@@ -24,6 +24,7 @@ function App() {
             <div className={s.content}>
               <div className={s.scroll}>
                 <Routes>
+                  {/* List view and modal routing */}
                   <Route path="/pokemon" element={<ListPage />} />
                   <Route path="/pokemon/:name" element={<ListPage />} />
                   <Route path="*" element={<ListPage />} />
@@ -37,9 +38,9 @@ function App() {
   );
 }
 
+// JSS styles for layout and background layering
 const useStyles = createUseStyles(
   {
-    // main container
     root: {
       position: "relative",
       zIndex: 2,
@@ -48,13 +49,12 @@ const useStyles = createUseStyles(
       width: "100vw",
       display: "flex",
     },
-
     content: {
       flex: 1,
       overflow: "hidden",
       position: "relative",
+      zIndex: 0, // Ensures modal stacks above content
     },
-
     scroll: {
       position: "absolute",
       inset: 0,
@@ -62,12 +62,10 @@ const useStyles = createUseStyles(
       paddingBottom: 24,
       zIndex: 3,
     },
-
-    // true background
     background: {
       position: "fixed",
       inset: 0,
-      zIndex: -9999, // nothing can top this
+      zIndex: -9999,
       pointerEvents: "none",
       backgroundColor: "#171E2b",
       backgroundImage: `
